@@ -1,4 +1,5 @@
 class BlogPostsController < ApplicationController
+    before_action :authenticate_user!, except: [:index, :show]
     # Re-use the blog post find code and have it run before each action
     before_action :set_blog_post, only: [:show, :edit, :update, :destroy]
 
@@ -39,6 +40,8 @@ class BlogPostsController < ApplicationController
         @blog_post.destroy
         redirect_to root_path
     end
+
+    private
 
     def blog_post_params
         params.require(:blog_post).permit(:title, :body)
